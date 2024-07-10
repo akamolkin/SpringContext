@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class UserDao {
-    HikariCPDataSource dc;
+    private HikariCPDataSource dc;
     private static final String getUserId = "select id, username from users where id = ?";
     private static final String getUserName = "select id, username from users where username = ?";
     private static final String getAllUser = "select id, username from users";
@@ -22,7 +22,8 @@ public class UserDao {
     private static final String deleteUserName = "delete from users where username = ?";
     private static final String deleteUserAll = "delete from users";
 
-    public UserDao() {
+    public UserDao(HikariCPDataSource dc) {
+        this.dc = dc;
     }
 
     public User findById(long id) {
