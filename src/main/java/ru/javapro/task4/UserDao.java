@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 public class UserDao {
     private HikariCPDataSource dc;
+  //  private Connection connection;
     private static final String getUserId = "select id, username from users where id = ?";
     private static final String getUserName = "select id, username from users where username = ?";
     private static final String getAllUser = "select id, username from users";
@@ -26,9 +27,13 @@ public class UserDao {
         this.dc = dc;
     }
 
+//    public UserDao(Connection connection) {
+//        this.connection = connection;
+//    }
+
     public User findById(long id) {
         User result = null;
-        try (Connection con = dc.getConnection();
+        try (Connection con = dc.getConnection()/*dc.getConnection()*/;
              PreparedStatement stmt = con.prepareStatement(getUserId)
         ) {
             stmt.setLong(1, id);
