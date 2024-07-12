@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+//@Configuration
 public class HikariCPDataSource {
     private static HikariConfig config = new HikariConfig();
-    private HikariDataSource ds;
+    private static HikariDataSource ds;
 
     {
         config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
@@ -23,7 +24,12 @@ public class HikariCPDataSource {
         ds = new HikariDataSource(config);
     }
 
-    public Connection getConnection() throws SQLException {
+//    @Bean
+//    public HikariCPDataSource hikariCPDataSource(){
+//        return new HikariCPDataSource();
+//    }
+   // @Bean
+    public  Connection getConnection() throws SQLException {
         return ds.getConnection();
     }
 

@@ -6,8 +6,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-    //@Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
     public User getUserById(long id){
         User result = userDao.findById(id);
         if (result == null) System.out.println("User not found with id " + id);
