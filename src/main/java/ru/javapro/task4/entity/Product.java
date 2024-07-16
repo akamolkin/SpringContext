@@ -3,28 +3,22 @@ package ru.javapro.task4.entity;
 public class Product {
     //Продукт клиента: id, номер счета, баланс, тип продукта (счет, карта).
     private long id;
-    //private User user;
     private long userId;
     private String accountNumber;
     private double balance;
     private ProductType type;
 
-    public Product(long id, long userId/*User user*/, String accountNumber, double balance, String type) {
+    public Product(long id, long userId, String accountNumber, double balance, String type) {
         this.id = id;
         this.userId = userId;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.type = ProductType.valueOf(type);
-        //this.type = type;
     }
 
     public long getId() {
         return id;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
 
     public long getUserId() {
         return userId;

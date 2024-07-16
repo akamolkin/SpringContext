@@ -1,7 +1,6 @@
-package ru.javapro.task4.dto;
+package ru.javapro.task4.dao;
 
 import org.springframework.stereotype.Component;
-import ru.javapro.task4.HikariCPDataSource;
 import ru.javapro.task4.entity.User;
 
 import javax.sql.DataSource;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserDto {
+public class UserDao {
     private DataSource ds;
     private static final String getUserId = "select id, username from users where id = ?";
     private static final String getUserName = "select id, username from users where username = ?";
@@ -25,7 +24,7 @@ public class UserDto {
     private static final String deleteUserName = "delete from users where username = ?";
     private static final String deleteUserAll = "delete from users";
 
-    public UserDto(DataSource ds) {
+    public UserDao(DataSource ds) {
         this.ds = ds;
     }
 

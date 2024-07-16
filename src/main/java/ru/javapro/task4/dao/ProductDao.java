@@ -1,7 +1,6 @@
-package ru.javapro.task4.dto;
+package ru.javapro.task4.dao;
 
 import org.springframework.stereotype.Component;
-import ru.javapro.task4.HikariCPDataSource;
 import ru.javapro.task4.entity.Product;
 
 import javax.sql.DataSource;
@@ -13,21 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductDto {
-    //private HikariCPDataSource dc;
+public class ProductDao {
     private DataSource ds;
     private static final String getProductById = "select id, user_id, balance, acc_num, product_type FROM products where id = ?";
     private static final String getAllByUserId = "select id, user_id, balance, acc_num, product_type FROM products where user_id = ?";
     private static final String insertProduct = "insert into products(user_id, balance, acc_num, product_type) values(?, ?, ?, ?)";
     private static final String deleteById = "delete from products where id = ?";
 
-    public ProductDto(DataSource ds) {
+    public ProductDao(DataSource ds) {
         this.ds = ds;
     }
-
-//    public ProductDto(Connection connection){
-//        this.connection = connection;
-//    }
 
     public List<Product> findAllByUserId(long userId) {
         List<Product> result = new ArrayList<>();
