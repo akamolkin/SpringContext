@@ -6,31 +6,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-//@Configuration
+@Configuration
 public class HikariCPDataSource {
-    private static HikariConfig config = new HikariConfig();
-    private static HikariDataSource ds;
-
-    {
+    @Bean
+    public DataSource getDataSource() {
+        HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:postgresql://localhost:5432/postgres");
         config.setUsername("postgres");
         config.setPassword("12345678");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        ds = new HikariDataSource(config);
+        DataSource ds = new HikariDataSource(config);
+        return ds;
     }
-
-//    @Bean
-//    public HikariCPDataSource hikariCPDataSource(){
-//        return new HikariCPDataSource();
-//    }
-   // @Bean
-    public  Connection getConnection() throws SQLException {
-        return ds.getConnection();
-    }
-
 }

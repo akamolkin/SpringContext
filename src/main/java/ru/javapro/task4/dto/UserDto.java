@@ -1,7 +1,10 @@
-package ru.javapro.task4;
+package ru.javapro.task4.dto;
 
 import org.springframework.stereotype.Component;
+import ru.javapro.task4.HikariCPDataSource;
+import ru.javapro.task4.entity.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,9 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserDao {
-    private HikariCPDataSource dc;
-  //  private Connection connection;
+public class UserDto {
+    private DataSource ds;
     private static final String getUserId = "select id, username from users where id = ?";
     private static final String getUserName = "select id, username from users where username = ?";
     private static final String getAllUser = "select id, username from users";
@@ -23,17 +25,13 @@ public class UserDao {
     private static final String deleteUserName = "delete from users where username = ?";
     private static final String deleteUserAll = "delete from users";
 
-    public UserDao(HikariCPDataSource dc) {
-        this.dc = dc;
+    public UserDto(DataSource ds) {
+        this.ds = ds;
     }
-
-//    public UserDao(Connection connection) {
-//        this.connection = connection;
-//    }
 
     public User findById(long id) {
         User result = null;
-        try (Connection con = dc.getConnection()/*dc.getConnection()*/;
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(getUserId)
         ) {
             stmt.setLong(1, id);
@@ -48,7 +46,7 @@ public class UserDao {
     }
     public User findByName(String name) {
         User result = null;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(getUserName)
         ) {
             stmt.setString(1, name);
@@ -65,7 +63,7 @@ public class UserDao {
     public List<User> getAll() {
         List<User> result = new ArrayList<>();
 
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(getAllUser)
         ) {
              ResultSet rs = stmt.executeQuery();
@@ -82,7 +80,7 @@ public class UserDao {
 
     public int createUser(String name) {
        int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(createUser)
         ) {
             stmt.setString(1, name);
@@ -95,7 +93,7 @@ public class UserDao {
 
     public int updateById(long id, String newName) {
         int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(updateUserId)
         ) {
             stmt.setString(1, newName);
@@ -109,7 +107,7 @@ public class UserDao {
 
     public int updateByName(String oldName, String newName) {
         int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(updateUserName)
         ) {
             stmt.setString(1, newName);
@@ -123,7 +121,7 @@ public class UserDao {
 
     public int deleteById(long id) {
         int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(deleteUserId)
         ) {
             stmt.setLong(1, id);
@@ -136,7 +134,7 @@ public class UserDao {
 
     public int deleteByName(String name) {
         int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(deleteUserName)
         ) {
             stmt.setString(1, name);
@@ -149,7 +147,7 @@ public class UserDao {
 
     public int deleteAll() {
         int result = -1;
-        try (Connection con = dc.getConnection();
+        try (Connection con = ds.getConnection();
              PreparedStatement stmt = con.prepareStatement(deleteUserAll)
         ) {
             result = stmt.executeUpdate();
