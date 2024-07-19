@@ -1,4 +1,4 @@
-package ru.javapro.task4;
+package ru.javapro.task4.entity;
 
 public class User {
     private long id;
@@ -19,7 +19,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "ru.javapro.task4.User{" +
+        return "ru.javapro.task4.entity.User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 '}';
